@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
-from util import RequestUtils, Response
-from util.DbConnector import DbConnector
+from todoapp.backend.util import RequestUtils, Response
+from todoapp.backend.util.DbConnector import DbConnector
 import psycopg2
 import datetime
 from loguru import logger

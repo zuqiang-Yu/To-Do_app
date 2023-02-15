@@ -1,8 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from Controller.TodolistController import app_info
-
+from todoapp.backend.controller.TodolistController import app_info
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 # register the blueprint into flask app

@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from setting import psql_host, psql_port, psql_password, psql_username, database_name
+from todoapp.backend.setting import psql_host, psql_port, psql_password, psql_username, database_name
 
 
 class DbConnector:
