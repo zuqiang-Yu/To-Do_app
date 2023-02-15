@@ -23,22 +23,33 @@ def get_users():
 
 @app_info.route("/users", methods=["POST"])
 def register_user():
+    # get user input from front-end
     username = RequestUtils.get("username").lower()
     password = RequestUtils.get("password").lower()
     role = RequestUtils.get("role").lower()
-
+    # check the username is unique
     cur = database.getCursor()
-    insert_query = """INSERT INTO users (username, password, role) VALUES (%s,%s,%s)"""
-    insert_data = (username, password, role)
+    cur.execute('SELECT * FROM users WHERE username=\'' + username + '\';')
+    print(cur.rowcount)
+    if cur.rowcount != 0:
+      database.close()
+      return Response.fail()
+    else:
+      # if the username is unique, insert into database
+      insert_query = """INSERT INTO users (username, password, role) VALUES (%s,%s,%s)"""
+      insert_data = (username, password, role)
 
-    cur.execute(insert_query, insert_data)
-    database.connection.commit()
-    count = cur.rowcount
-    print(count, "Record inserted successfully into mobile table")
+      cur.execute(insert_query, insert_data)
+      database.connection.commit()
 
-    database.close()
+      data = {
+        "username": username,
+        "role": role
+      }
 
-    return Response.success(count)
+      database.close()
+
+      return Response.success(data)
 
 
 @app_info.route("/items", methods=["POST"])
