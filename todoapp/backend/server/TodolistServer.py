@@ -38,8 +38,3 @@ def decode_auth_token(auth_token):
     return (401,'Invalid token. Please log in again.')
 
 
-# token = encode_auth_token('zuqiang')
-# print(token)
-
-a = decode_auth_token('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NzY0NTM3MTAsImlhdCI6MTY3NjQ1MzcwNSwic3ViIjoienVxaWFuZyJ9.Vkptg-8WyhugUWhzLKphPF7GavaSmbCtOvYMhQpCaZg')
-print(a)
