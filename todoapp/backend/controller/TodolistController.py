@@ -119,8 +119,8 @@ def add_new_item():
 @app_info.route("/items", methods=["PUT"])
 def update_item():
   """
-  Delete Operation
-  verify user's JWT token and delete the item user choose
+  Update Operation
+  verify user's JWT token and update the item user choose
   """
   result = decode_auth_token(str(request.headers['Jwttoken']))
   item_id = str(request.headers["item_id"])
@@ -130,7 +130,6 @@ def update_item():
   # verify user's login information
   if result[0] == 200:
     user_id = result[1]['user_id']
-    item = RequestUtils.get("item").lower()
     try:
       cur = database.getCursor()
       query = """UPDATE items_table set items = %s WHERE user_id = %s AND id = %s"""
@@ -145,7 +144,40 @@ def update_item():
       database.close()
       print("PostgreSQL connection is closed")
 
-    return Response.success(item)
+    return Response.success(content)
+  else:
+    print(decode_auth_token(str(request.headers['Jwttoken']))[1])
+    return Response.fail()
+
+
+@app_info.route("/items", methods=["DELETE"])
+def delete_item():
+  """
+  Delete Operation
+  verify user's JWT token and delete the item user choose
+  """
+  result = decode_auth_token(str(request.headers['Jwttoken']))
+  item_id = str(request.headers["item_id"])
+
+  # verify user's login information
+  if result[0] == 200:
+    user_id = result[1]['user_id']
+
+    try:
+      cur = database.getCursor()
+      query = """DELETE FROM items_table WHERE user_id = %s AND id = %s"""
+      data = (user_id, item_id)
+
+      cur.execute(query, data)
+      database.connection.commit()
+    except (Exception, psycopg2.Error) as error:
+      logger.error(error)
+      return Response.fail()
+    finally:
+      database.close()
+      print("PostgreSQL connection is closed")
+
+    return Response.success("this item has been deleted")
   else:
     print(decode_auth_token(str(request.headers['Jwttoken']))[1])
     return Response.fail()
