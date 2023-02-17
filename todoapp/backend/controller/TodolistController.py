@@ -84,8 +84,15 @@ def login():
 
 @app_info.route("/items", methods=["POST"])
 def add_new_item():
-    if decode_auth_token(str(request.headers['Jwttoken']))[0] == 200:
-      user_id = RequestUtils.get("user_id").lower()
+    """
+      Add operation
+      verify user's JWT token and add item to their items_table
+    """
+    result = decode_auth_token(str(request.headers['Jwttoken']))
+
+    # verify user's login information
+    if result[0] == 200:
+      user_id = result[1]['user_id']
       item = RequestUtils.get("item").lower()
       try:
           cur = database.getCursor()
@@ -94,8 +101,8 @@ def add_new_item():
 
           cur.execute(insert_query, insert_data)
           database.connection.commit()
-          count = cur.rowcount
-          print(count, "Record inserted successfully into mobile table")
+          # count = cur.rowcount
+          # print(count, "Record inserted successfully into mobile table")
       except (Exception, psycopg2.Error) as error:
           logger.error(error)
           return Response.fail()
@@ -103,19 +110,56 @@ def add_new_item():
           database.close()
           print("PostgreSQL connection is closed")
 
-      return Response.success(count)
+      return Response.success(item)
     else:
       print(decode_auth_token(str(request.headers['Jwttoken']))[1])
       return Response.fail()
 
 
+@app_info.route("/items", methods=["PUT"])
+def update_item():
+  """
+  Delete Operation
+  verify user's JWT token and delete the item user choose
+  """
+  result = decode_auth_token(str(request.headers['Jwttoken']))
+  item_id = str(request.headers["item_id"])
+
+  content = RequestUtils.get("item").lower()
+
+  # verify user's login information
+  if result[0] == 200:
+    user_id = result[1]['user_id']
+    item = RequestUtils.get("item").lower()
+    try:
+      cur = database.getCursor()
+      query = """UPDATE items_table set items = %s WHERE user_id = %s AND id = %s"""
+      data = (content, user_id, item_id)
+
+      cur.execute(query, data)
+      database.connection.commit()
+    except (Exception, psycopg2.Error) as error:
+      logger.error(error)
+      return Response.fail()
+    finally:
+      database.close()
+      print("PostgreSQL connection is closed")
+
+    return Response.success(item)
+  else:
+    print(decode_auth_token(str(request.headers['Jwttoken']))[1])
+    return Response.fail()
+
+
 @app_info.route("/items", methods=["GET"])
 def get_item_by_user_id():
     #verify JWT token
-    if decode_auth_token(str(request.headers['Jwttoken']))[0] == 200:
+    result = decode_auth_token(str(request.headers['Jwttoken']))
+
+    if result[0] == 200:
 
       cur = database.getCursor()
-      user_id = RequestUtils.get("user_id").lower()
+      user_id = result[1]['user_id']
       cur.execute('SELECT * FROM items_table WHERE user_id=\'' + user_id + '\';')
       item = cur.fetchall()
       database.close()
