@@ -29,8 +29,8 @@ class DbConnector:
             # Create a cursor to perform database operations
             self.cursor = self.connection.cursor()
             # Print PostgreSQL details
-            print("PostgreSQL server information")
-            print(self.connection.get_dsn_parameters(), "\n")
+            # print("PostgreSQL server information")
+            # print(self.connection.get_dsn_parameters(), "\n")
         except (Exception, Error) as error:
             print("Error while connecting to PostgreSQL", error)
 
