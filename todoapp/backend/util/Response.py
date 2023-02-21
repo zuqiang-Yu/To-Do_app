@@ -1,16 +1,23 @@
 from flask import jsonify
 
 
-def success(data):
+def success(data=None):
     """
 
     :param data:
     """
-    result = {
+    if data is not None:
+
+      result = {
+          "message": "Success",
+          "code": 200,
+          "data": data
+      }
+    else:
+      result = {
         "message": "Success",
-        "code": 200,
-        "data": data
-    }
+        "code": 200
+      }
 
     return jsonify(result)
 
