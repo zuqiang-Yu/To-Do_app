@@ -1,0 +1,21 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.m-card {
+  width: 900px;
+  height: 300px;
+  margin: auto;
+  margin-top: 300px;
+}
+
+.m-but{
+  margin: auto;
+}

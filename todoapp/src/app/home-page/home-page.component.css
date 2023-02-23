@@ -1,0 +1,27 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+  margin-top: 200px;
+}
+
+.example-full-width {
+  width: 150%;
+}
+
+.m-list-form{
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+
+}
+
+.m-list{
+  width: 150%;
+}
+
+.m-but{
+  margin: auto;
+}
