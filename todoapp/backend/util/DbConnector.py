@@ -22,36 +22,6 @@ class DbConnector:
         self.connection = None
         self.cursor = None
 
-    # def getCursor(self):
-    #     try:
-    #         # Connect to an existing database
-    #         # self.connection = psycopg2.connect(user="yzq",
-    #         #                                    password="zuqiangyyy",
-    #         #                                    host="127.0.0.1",
-    #         #                                    port="5432",
-    #         #                                    database="flask_db")
-    #
-    #         self.connection = psycopg2.connect(user="postgres",
-    #                                            password="jchk@cSjP&#:}&#$",
-    #                                            host="35.239.10.136",
-    #                                            database="todoapp_flask_db")
-    #
-    #         # Create a cursor to perform database operations
-    #         self.cursor = self.connection.cursor()
-    #         # Print PostgreSQL details
-    #         print("PostgreSQL server information")
-    #         print(self.connection.get_dsn_parameters(), "\n")
-    #     except (Exception, Error) as error:
-    #         print("Error while connecting to PostgreSQL", error)
-    #
-    #     return self.cursor
-    #
-    # def close(self):
-    #     if (self.connection):
-    #         self.connection.close()
-    #         self.cursor.close()
-    #         print("PostgreSQL connection is closed")
-
     def connect_with_connector(self) -> sqlalchemy.engine.base.Engine:
       """
       Initializes a connection pool for a Cloud SQL instance of Postgres.
