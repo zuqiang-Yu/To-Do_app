@@ -7,19 +7,19 @@
   <form class="example-form">
     <mat-form-field class="example-full-width">
       <mat-label>User Name</mat-label>
-      <input matInput placeholder="Ex. bot">
+      <input matInput placeholder="Ex. bot" name="username" #box (keyup)="getUsername(box.value)" >
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>password</mat-label>
-      <input matInput type="password">
+      <input matInput type="password" password="password" #box (keyup)="getPassword(box.value)">
     </mat-form-field>
   </form>
 
   <section class="m-but">
     <div class="example-button-row">
-      <button mat-raised-button color="primary">Log in</button>
-      <button mat-button>Register</button>
+      <button mat-raised-button color="primary" (click)="loginFunc()">Log in</button>
+      <button mat-button routerLink="/register">Register</button>
     </div>
   </section>
 </mat-card>

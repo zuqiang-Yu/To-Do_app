@@ -7,4 +7,24 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+
+  username:String = ''
+  password:String = ''
+  getUsername(val:String){
+    this.username
+  }
+  getPassword(val:String){
+    this.password
+  }
+
+
+  loginFunc(){
+    alert(this.password);
+  }
+
+
+
+
+
+
 }
